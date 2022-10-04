@@ -65,20 +65,20 @@ public class a12 {
         ShowWindow(new IntPtr(a15), 0);
     }
 
-    [DllImport("user32.dll ")]
+    [DllImport("user32.dll")]
     public static extern bool IsWindowVisible(IntPtr a15);
 
-    [DllImport("user32.dll ")]
+    [DllImport("user32.dll")]
     public static extern bool ShowWindow(IntPtr a15, Int32 nCmdShow);
 
-    [DllImport("user32.dll ", EntryPoint = "FindWindowEx ", CharSet = CharSet.Auto)]
+    [DllImport("user32.dll", EntryPoint = "FindWindowEx", CharSet = CharSet.Auto)]
     private static extern IntPtr FindWindowEx(IntPtr a15Parent, IntPtr a15ChildAfter, string lpszClass, string lpszWindow);
 
     [return: MarshalAs(UnmanagedType.Bool)]
-    [DllImport("user32.dll ", SetLastError = true)]
+    [DllImport("user32.dll", SetLastError = true)]
     private static extern uint GetWindowThreadProcessId(IntPtr a15, out uint lpdwProcessId);
 
     [return: MarshalAs(UnmanagedType.Bool)]
-    [DllImport("user32.dll ", SetLastError = true, CharSet = CharSet.Auto)]
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     private static extern bool PostMessage(IntPtr a15, uint Msg, IntPtr wParam, IntPtr lParam);
 }
