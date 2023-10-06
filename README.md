@@ -1,9 +1,11 @@
-# GandCrab v5 JS-Dropper
-![img](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.k7E74heCyzb2uuOGOc7T9QHaEK%26pid%3DApi&f=1&ipt=a9b04ebbcd0d220882cb7a6f46a715fd486666d66d00ec83a9a50e5f777f275b&ipo=images)
+# GandCrab Ransomware Related Files (both v5.1 and v5.0)
 
-Deobfuscated Sample of GandCrab(v5) Ransomware's JS based EXE dropper, <br>
-they shared trough email attatchment/embedded in PDF files.
+![GandCrab](https://blog.getcryptostopper.com/hs-fs/hubfs/GandCrab.jpg)
 
+## The v5.0 (JS-Dropper) Directory
 
+This directory contains files related to the JS-based Ransomware-Binary Dropper used by GandCrab v5 to spread. These files have been somewhat deobfuscated and modified by me to attempt to make them easier to understand and work with.
 
+## The v5.1 (Webpage) Directory
 
+This directory contains files modified by me, which were dropped on a GandCrab v5.1 infected system. This webpage, from my observation, serves as a file recovery help page that victims could use as a guide.
